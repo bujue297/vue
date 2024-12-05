@@ -1,26 +1,49 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <h1>Vue + Element Plus + ECharts</h1>
+    <el-button type="primary">Element Plus Button</el-button>
+    <el-input v-model="inputValue" placeholder="Enter text"></el-input>
+    
+    <div ref="echartsContainer" style="height: 400px;"></div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import * as echarts from 'echarts';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  data() {
+    return {
+      inputValue: '',
+    };
+  },
+  mounted() {
+    const chartContainer = this.$refs.echartsContainer;
+    const chart = echarts.init(chartContainer);
+
+    const options = {
+      title: {
+        text: 'ECharts Example',
+      },
+      tooltip: {},
+      xAxis: {
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      },
+      yAxis: {},
+      series: [
+        {
+          name: 'Sales',
+          type: 'bar',
+          data: [10, 22, 43, 36, 20, 14, 32],
+        },
+      ],
+    };
+
+    chart.setOption(options);
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+/* 可以在这里添加本地样式 */
 </style>
